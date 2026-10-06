@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#e9f0e5">
+  <title>Trip to Shanghai, Hangzhou &amp; Suzhou</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #263b32;
+      --muted: #64776c;
+      --paper: #edf2e9;
+      --card: #f8fbf5;
+      --accent: #b16b45;
+      --line: #d6e1d2;
+      --olive: #57745a;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+      font-size: 17px;
+      line-height: 1.7;
+    }
+    .page { width: min(100% - 32px, 680px); margin: 0 auto; padding: 28px 0 44px; }
+    header {
+      padding: 30px 24px 27px;
+      border-radius: 24px;
+      background: linear-gradient(118deg, rgba(246, 250, 239, .94), rgba(220, 233, 215, .9) 55%, rgba(203, 222, 198, .88)); border: 1px solid #c8d8c2; box-shadow: 0 12px 30px rgba(54, 83, 61, .12);
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: "";
+      position: absolute;
+      width: 190px; height: 110px;
+      top: -34px; right: -32px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(107, 145, 102, .20), rgba(107, 145, 102, 0) 70%);
+      filter: blur(4px);
+      animation: breeze 8s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+    @keyframes breeze { from { transform: translateX(-10px) rotate(-8deg); } to { transform: translateX(12px) rotate(8deg); } }
+    header::after {
+      content: "台南・慢慢走";
+      display: inline-block;
+      margin-top: 15px;
+      padding: 4px 11px;
+      border: 1px solid #bdd0b6;
+      border-radius: 999px;
+      color: #4c7052;
+      font-size: 13px;
+      letter-spacing: .08em;
+    }
+    .eyebrow { margin: 0 0 7px; color: var(--accent); font-size: 13px; font-weight: 800; letter-spacing: .12em; }
+    h1 { margin: 0; font-size: clamp(32px, 9vw, 46px); line-height: 1.25; letter-spacing: .03em; }
+    .intro { margin: 12px 0 0; color: #53695a; font-size: 16px; }
+    .day { margin-top: 30px; }
+    .day-heading { display: flex; align-items: baseline; gap: 11px; margin: 0 0 14px; }
+    .day-heading h2 { margin: 0; font-size: 24px; letter-spacing: .04em; }
+    .day-heading span { color: var(--muted); font-size: 14px; }
+    .stops { display: grid; gap: 12px; }
+    .stop {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 13px;
+      padding: 17px 16px;
+      border: 1px solid var(--line);
+      border-radius: 17px;
+      background: var(--card);
+      box-shadow: 0 5px 16px rgba(45, 74, 51, .07);
+    }
+    .time { color: var(--accent); font-size: 15px; font-weight: 800; font-variant-numeric: tabular-nums; }
+    .place { margin: 0; font-size: 18px; line-height: 1.45; }
+    .desc { margin: 5px 0 0; color: var(--muted); font-size: 15px; line-height: 1.6; }
+    .note { margin: 26px 2px 0; color: var(--muted); font-size: 14px; text-align: center; }
+    footer { margin-top: 25px; color: #829184; font-size: 12px; text-align: center; letter-spacing: .08em; }
+    @media (min-width: 600px) {
+      .page { padding-top: 42px; }
+      header { padding: 36px 34px; }
+      .stop { grid-template-columns: 86px 1fr; padding: 19px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <p class="eyebrow">上海 · 杭州 · 蘇州 · 八日慢遊</p>
+      <h1>Trip to China</h1>
+      <p class="intro">給 Sophie 的城市與水巷小旅行</p>
+    </header>
+
+    <section class="day" aria-labelledby="day-one">
+      <div class="day-heading"><h2 id="day-one">第一天 · 抵達上海</h2><span>安頓・外灘夜景</span></div>
+      <div class="stops">
+        <article class="stop"><div class="time">10:00</div><div><h3 class="place">抵達上海（示意）</h3><p class="desc">機場前往市區：搭地鐵或計程車到住宿地，時間依抵達機場而定。</p></div></article>
+        <article class="stop"><div class="time">13:00</div><div><h3 class="place">飯店寄放行李（示意）</h3><p class="desc">先在住宿附近吃午餐，步行或搭一小段地鐵回飯店休息。</p></div></article>
+        <article class="stop"><div class="time">17:00</div><div><h3 class="place">外灘</h3><p class="desc">搭地鐵到南京東路一帶，再散步到江邊看黃浦江和城市天際線。</p></div></article>
+        <article class="stop"><div class="time">19:00</div><div><h3 class="place">南京路步行街</h3><p class="desc">沿步行街吃晚餐、慢慢逛，逛累了搭地鐵或計程車回飯店。</p></div></article>
+      </div>
+    </section>
+
+    <section class="day" aria-labelledby="day-two">
+      <div class="day-heading"><h2 id="day-two">第二天 · 上海老城</h2><span>園林・巷弄・夜色</span></div>
+      <div class="stops">
+        <article class="stop"><div class="time">09:00</div><div><h3 class="place">豫園</h3><p class="desc">搭地鐵到豫園站，逛古典園林與周邊老街。</p></div></article>
+        <article class="stop"><div class="time">12:00</div><div><h3 class="place">城隍廟周邊午餐</h3><p class="desc">步行找些上海小吃，午餐後在附近歇歇腳。</p></div></article>
+        <article class="stop"><div class="time">15:00</div><div><h3 class="place">人民廣場・上海博物館</h3><p class="desc">搭地鐵前往人民廣場；入館與預約規定出發前再確認。</p></div></article>
+        <article class="stop"><div class="time">18:30</div><div><h3 class="place">新天地</h3><p class="desc">搭地鐵到新天地站，在石庫門街區吃晚餐、散步。</p></div></article>
+      </div>
+    </section>
+
+    <section class="day" aria-labelledby="day-three">
+      <div class="day-heading"><h2 id="day-three">第三天 · 上海慢走</h2><span>梧桐樹影・咖啡小店</span></div>
+      <div class="stops">
+        <article class="stop"><div class="time">09:30</div><div><h3 class="place">武康路</h3><p class="desc">搭地鐵到交通大學站一帶，再沿街步行看老洋房和梧桐樹。</p></div></article>
+        <article class="stop"><div class="time">12:00</div><div><h3 class="place">安福路午餐</h3><p class="desc">從武康路步行前往，挑間喜歡的小店坐下來吃飯。</p></div></article>
+        <article class="stop"><div class="time">15:00</div><div><h3 class="place">田子坊</h3><p class="desc">搭地鐵或計程車到泰康路，在小巷裡逛逛手作店。</p></div></article>
+        <article class="stop"><div class="time">18:30</div><div><h3 class="place">上海晚餐・整理行李</h3><p class="desc">回住宿附近用餐，為明天搭高鐵移動預留休息時間。</p></div></article>
+      </div>
+    </section>
+
+    <section class="day" aria-labelledby="day-four">
+      <div class="day-heading"><h2 id="day-four">第四天 · 上海到杭州</h2><span>高鐵・西湖傍晚</span></div>
+      <div class="stops">
+        <article class="stop"><div class="time">08:00</div><div><h3 class="place">前往上海虹橋站</h3><p class="desc">從住宿地搭地鐵或計程車到上海虹橋站，預留進站與安檢時間。</p></div></article>
+        <article class="stop"><div class="time">09:30</div><div><h3 class="place">高鐵前往杭州東站（示意）</h3><p class="desc">城際交通：上海虹橋 → 杭州東；班次、時間和車票以 12306 當日查詢為準。</p></div></article>
+        <article class="stop"><div class="time">12:30</div><div><h3 class="place">杭州住宿・午餐（示意）</h3><p class="desc">從杭州東站搭地鐵或計程車到住宿地，寄放行李後吃午餐。</p></div></article>
+        <article class="stop"><div class="time">16:00</div><div><h3 class="place">西湖湖濱</h3><p class="desc">搭地鐵或計程車到湖濱，沿湖散步看夕陽，晚餐留在湖邊附近。</p></div></article>
+      </div>
+    </section>
+
+    <section class="day" aria-labelledby="day-five">
+      <div class="day-heading"><h2 id="day-five">第五天 · 杭州山水</h2><span>寺院・茶田・老街</span></div>
+      <div class="stops">
+        <article class="stop"><div class="time">08:30</div><div><h3 class="place">靈隱寺</h3><p class="desc">從市區搭公車或計程車前往；交通與入寺安排以當日公告為準。</p></div></article>
+        <article class="stop"><div class="time">12:00</div><div><h3 class="place">龍井村午餐</h3><p class="desc">搭計程車或公車到龍井一帶，吃午餐、看看茶園山景。</p></div></article>
+        <article class="stop"><div class="time">15:30</div><div><h3 class="place">曲院風荷</h3><p class="desc">搭公車或計程車回西湖邊，沿著湖岸和林蔭步道慢慢走。</p></div></article>
+        <article class="stop"><div class="time">18:30</div><div><h3 class="place">河坊街晚餐</h3><p class="desc">搭地鐵或計程車到河坊街，逛逛老街再回住宿休息。</p></div></article>
+      </div>
+    </section>
+
+    <section class="day" aria-labelledby="day-six">
+      <div class="day-heading"><h2 id="day-six">第六天 · 杭州到蘇州</h2><span>高鐵・平江路夜遊</span></div>
+      <div class="stops">
+        <article class="stop"><div class="time">08:30</div><div><h3 class="place">前往杭州東站</h3><p class="desc">從住宿地搭地鐵或計程車到杭州東站，預留進站與安檢時間。</p></div></article>
+        <article class="stop"><div class="time">10:00</div><div><h3 class="place">高鐵前往蘇州（示意）</h3><p class="desc">城際交通：杭州東 → 蘇州或蘇州北；確認車站與是否直達，班次以 12306 為準。</p></div></article>
+        <article class="stop"><div class="time">13:30</div><div><h3 class="place">蘇州住宿・午餐（示意）</h3><p class="desc">抵達後搭地鐵或計程車到住宿地，放好行李再用午餐。</p></div></article>
+        <article class="stop"><div class="time">17:00</div><div><h3 class="place">平江路</h3><p class="desc">步行或搭計程車到古城河巷，沿水巷散步、吃晚餐。</p></div></article>
+      </div>
+    </section>
+
+    <section class="day" aria-labelledby="day-seven">
+      <div class="day-heading"><h2 id="day-seven">第七天 · 蘇州園林</h2><span>古典園林・運河夜景</span></div>
+      <div class="stops">
+        <article class="stop"><div class="time">08:30</div><div><h3 class="place">拙政園</h3><p class="desc">搭地鐵或計程車前往，建議先確認預約與入園時間。</p></div></article>
+        <article class="stop"><div class="time">11:30</div><div><h3 class="place">蘇州博物館</h3><p class="desc">步行前往園林旁的博物館，入館預約規定請事先查詢。</p></div></article>
+        <article class="stop"><div class="time">14:30</div><div><h3 class="place">山塘街</h3><p class="desc">搭地鐵或計程車到山塘街，沿運河看看老房子與橋。</p></div></article>
+        <article class="stop"><div class="time">18:30</div><div><h3 class="place">運河邊晚餐</h3><p class="desc">在山塘街附近吃晚餐，散步看夜景後搭車回住宿。</p></div></article>
+      </div>
+    </section>
+
+    <section class="day" aria-labelledby="day-eight">
+      <div class="day-heading"><h2 id="day-eight">第八天 · 蘇州返程</h2><span>高鐵・前往上海</span></div>
+      <div class="stops">
+        <article class="stop"><div class="time">08:30</div><div><h3 class="place">退房・前往蘇州站</h3><p class="desc">搭地鐵或計程車到車站；依車票確認是蘇州站或蘇州北站。</p></div></article>
+        <article class="stop"><div class="time">10:00</div><div><h3 class="place">高鐵返回上海（示意）</h3><p class="desc">城際交通：蘇州 → 上海虹橋或上海站；選擇靠近後續交通的到站點。</p></div></article>
+        <article class="stop"><div class="time">12:00</div><div><h3 class="place">上海午餐・轉往機場</h3><p class="desc">搭地鐵或計程車前往機場；航班、機場與預留時間需依實際行程調整。</p></div></article>
+      </div>
+    </section>
+
+    <p class="note">每日時間皆為示意。高鐵車次、到站、景點預約與市內路線，請依出發日期再次確認。</p>
+    <footer>SHANGHAI · HANGZHOU · SUZHOU</footer>
+  </main>
+</body>
+</html>
+
+
+
+
+
+
+
