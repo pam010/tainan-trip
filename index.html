@@ -173,6 +173,8 @@
     .poll-field input, .poll-field select, .poll-submit { min-height: 48px; padding: 10px 13px; border: 1px solid rgba(29, 29, 31, .15); border-radius: 12px; background: #fff; color: var(--ink); font: inherit; }
     .poll-submit { border-color: var(--accent); background: var(--accent); color: white; font-weight: 650; cursor: pointer; }
     .poll-submit:disabled { opacity: .6; cursor: wait; }
+    .poll-form.is-locked input, .poll-form.is-locked select { background: var(--canvas); color: var(--muted); }
+    .poll-form.is-locked .poll-submit { cursor: not-allowed; }
     .poll-results { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
     .poll-results li { display: flex; justify-content: space-between; gap: 12px; padding: 12px 14px; border-radius: 12px; background: var(--canvas); }
     .poll-count { color: var(--accent); font-weight: 700; font-variant-numeric: tabular-nums; }
@@ -296,6 +298,24 @@
       const status = document.getElementById('dinner-poll-status');
       const endpoint = `${projectUrl}/rest/v1/dinner_votes`;
       const headers = { apikey: publishableKey };
+      const localVoteKey = 'tainan-trip-dinner-vote';
+
+      function getSavedVote() {
+        try {
+          const saved = JSON.parse(localStorage.getItem(localVoteKey) || 'null');
+          return saved && choices.includes(saved.option) ? saved : null;
+        } catch {
+          return null;
+        }
+      }
+
+      function lockForm(savedVote) {
+        form.classList.add('is-locked');
+        form.querySelector('input[name="nickname"]').disabled = true;
+        form.querySelector('select[name="option"]').disabled = true;
+        form.querySelector('button').disabled = true;
+        status.textContent = `你已經投過了：${savedVote.option}`;
+      }
 
       async function refreshVotes() {
         status.textContent = '正在更新票數…';
@@ -315,7 +335,8 @@
             item.append(label, count);
             return item;
           }));
-          status.textContent = '票數已更新。';
+          const savedVote = getSavedVote();
+          status.textContent = savedVote ? `你已經投過了：${savedVote.option}` : '票數已更新。';
         } catch {
           status.textContent = '暫時無法載入票數，請稍後重試。';
         }
@@ -340,9 +361,10 @@
             body: JSON.stringify({ nickname, option })
           });
           if (!response.ok) throw new Error('投票送出失敗');
+          try { localStorage.setItem(localVoteKey, JSON.stringify({ nickname, option })); } catch { /* ignore storage limits */ }
           form.reset();
           await refreshVotes();
-          status.textContent = '投票成功，票數已更新。';
+          lockForm({ option });
         } catch {
           status.textContent = '投票未能送出，請稍後再試。';
         } finally {
@@ -350,6 +372,8 @@
         }
       });
 
+      const savedVote = getSavedVote();
+      if (savedVote) lockForm(savedVote);
       refreshVotes();
     })();
   </script>
