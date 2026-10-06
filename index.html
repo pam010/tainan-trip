@@ -3,88 +3,182 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#e9f0e5">
+  <meta name="theme-color" content="#f5f5f7">
   <title>Trip to Shanghai, Hangzhou &amp; Suzhou</title>
   <meta property="og:title" content="perfect trip">
   <meta property="og:description" content="check it out">
   <style>
     :root {
       color-scheme: light;
-      --ink: #263b32;
-      --muted: #64776c;
-      --paper: #edf2e9;
-      --card: #f8fbf5;
-      --accent: #b16b45;
-      --line: #d6e1d2;
-      --olive: #57745a;
+      --ink: #1d1d1f;
+      --muted: #6e6e73;
+      --canvas: #f5f5f7;
+      --surface: #ffffff;
+      --accent: #0071e3;
+      --line: rgba(29, 29, 31, .08);
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      background: var(--paper);
+      background: var(--canvas);
       color: var(--ink);
       font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
       font-size: 17px;
-      line-height: 1.7;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
     }
-    .page { width: min(100% - 32px, 680px); margin: 0 auto; padding: 28px 0 44px; }
+    .page { width: min(100% - 48px, 1040px); margin: 0 auto; padding: 28px 0 88px; }
     header {
-      padding: 30px 24px 27px;
-      border-radius: 24px;
-      background: linear-gradient(118deg, rgba(246, 250, 239, .94), rgba(220, 233, 215, .9) 55%, rgba(203, 222, 198, .88)); border: 1px solid #c8d8c2; box-shadow: 0 12px 30px rgba(54, 83, 61, .12);
+      min-height: 410px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       position: relative;
+      isolation: isolate;
       overflow: hidden;
+      padding: 72px 36px;
+      border: 1px solid rgba(255, 255, 255, .12);
+      border-radius: 34px;
+      background: linear-gradient(145deg, #111318 8%, #171b25 58%, #101116 100%);
+      color: #f5f5f7;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(24, 28, 40, .13);
     }
     header::before {
       content: "";
       position: absolute;
-      width: 190px; height: 110px;
-      top: -34px; right: -32px;
+      z-index: -1;
+      width: min(72vw, 760px);
+      aspect-ratio: 1;
+      top: -68%;
+      left: 50%;
+      transform: translateX(-50%);
       border-radius: 50%;
-      background: radial-gradient(ellipse, rgba(107, 145, 102, .20), rgba(107, 145, 102, 0) 70%);
-      filter: blur(4px);
-      animation: breeze 8s ease-in-out infinite alternate;
+      background: radial-gradient(circle, rgba(70, 121, 235, .38) 0%, rgba(92, 89, 198, .17) 34%, rgba(25, 29, 43, 0) 70%);
+      filter: blur(12px);
+      animation: hero-glow 16s ease-in-out infinite alternate;
       pointer-events: none;
     }
-    @keyframes breeze { from { transform: translateX(-10px) rotate(-8deg); } to { transform: translateX(12px) rotate(8deg); } }
+    @keyframes hero-glow {
+      from { transform: translateX(-54%) scale(.96); }
+      to { transform: translateX(-46%) scale(1.04); }
+    }
     header::after {
       content: "台南・慢慢走";
-      display: inline-block;
-      margin-top: 15px;
-      padding: 4px 11px;
-      border: 1px solid #bdd0b6;
+      display: inline-flex;
+      align-items: center;
+      margin-top: 27px;
+      padding: 7px 14px;
+      border: 1px solid rgba(255, 255, 255, .2);
       border-radius: 999px;
-      color: #4c7052;
+      background: rgba(255, 255, 255, .07);
+      color: rgba(245, 245, 247, .86);
       font-size: 13px;
       letter-spacing: .08em;
+      backdrop-filter: blur(12px);
     }
-    .eyebrow { margin: 0 0 7px; color: var(--accent); font-size: 13px; font-weight: 800; letter-spacing: .12em; }
-    h1 { margin: 0; font-size: clamp(32px, 9vw, 46px); line-height: 1.25; letter-spacing: .03em; }
-    .intro { margin: 12px 0 0; color: #53695a; font-size: 16px; }
-    .day { margin-top: 30px; }
-    .day-heading { display: flex; align-items: baseline; gap: 11px; margin: 0 0 14px; }
-    .day-heading h2 { margin: 0; font-size: 24px; letter-spacing: .04em; }
-    .day-heading span { color: var(--muted); font-size: 14px; }
-    .stops { display: grid; gap: 12px; }
+    header > * { position: relative; z-index: 1; }
+    .eyebrow { margin: 0 0 14px; color: #a8caff; font-size: 14px; font-weight: 600; letter-spacing: .16em; }
+    h1 { margin: 0; font-size: clamp(48px, 8vw, 88px); font-weight: 650; line-height: 1.04; letter-spacing: -.055em; }
+    .intro { margin: 20px 0 0; color: rgba(245, 245, 247, .72); font-size: 19px; }
+    .day {
+      margin-top: 24px;
+      padding: 32px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: var(--surface);
+      box-shadow: 0 12px 36px rgba(29, 29, 31, .045);
+      animation: section-arrive .7s ease both;
+    }
+    .day:nth-of-type(3) { animation-delay: .06s; }
+    .day:nth-of-type(4) { animation-delay: .1s; }
+    @keyframes section-arrive {
+      from { opacity: .72; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .day-heading {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin: 0 0 22px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--line);
+    }
+    .day-heading h2 { margin: 0; font-size: clamp(25px, 4vw, 34px); font-weight: 650; line-height: 1.2; letter-spacing: -.035em; }
+    .day-heading span { color: var(--muted); font-size: 15px; white-space: nowrap; }
+    .stops { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
     .stop {
       display: grid;
-      grid-template-columns: 72px 1fr;
-      gap: 13px;
-      padding: 17px 16px;
-      border: 1px solid var(--line);
-      border-radius: 17px;
-      background: var(--card);
-      box-shadow: 0 5px 16px rgba(45, 74, 51, .07);
+      grid-template-columns: 76px minmax(0, 1fr);
+      align-items: start;
+      gap: 16px;
+      min-width: 0;
+      padding: 22px;
+      border: 1px solid rgba(29, 29, 31, .045);
+      border-radius: 22px;
+      background: var(--canvas);
+      transition: transform .25s ease, box-shadow .25s ease, background-color .25s ease;
     }
-    .time { color: var(--accent); font-size: 15px; font-weight: 800; font-variant-numeric: tabular-nums; }
-    .place { margin: 0; font-size: 18px; line-height: 1.45; }
-    .desc { margin: 5px 0 0; color: var(--muted); font-size: 15px; line-height: 1.6; }
-    .note { margin: 26px 2px 0; color: var(--muted); font-size: 14px; text-align: center; }
-    footer { margin-top: 25px; color: #829184; font-size: 12px; text-align: center; letter-spacing: .08em; }
-    @media (min-width: 600px) {
-      .page { padding-top: 42px; }
-      header { padding: 36px 34px; }
-      .stop { grid-template-columns: 86px 1fr; padding: 19px 20px; }
+    .stop:hover { transform: translateY(-3px); background: #fff; box-shadow: 0 12px 28px rgba(29, 29, 31, .07); }
+    .time {
+      width: fit-content;
+      padding: 5px 9px;
+      border-radius: 9px;
+      background: #e8f2ff;
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 650;
+      font-variant-numeric: tabular-nums;
+      line-height: 1.5;
+    }
+    .place { margin: 0; font-size: 19px; font-weight: 620; line-height: 1.4; letter-spacing: -.02em; }
+    .desc { margin: 6px 0 0; color: var(--muted); font-size: 15px; line-height: 1.65; }
+    .note { margin: 28px 4px 0; color: var(--muted); font-size: 14px; text-align: center; }
+    footer { margin-top: 28px; color: #86868b; font-size: 12px; text-align: center; letter-spacing: .12em; }
+    main > img {
+      display: block;
+      width: min(220px, 62vw);
+      height: auto;
+      margin: 24px auto 0;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: #fff;
+      box-shadow: 0 12px 32px rgba(29, 29, 31, .08);
+    }
+    @media (max-width: 700px) {
+      .page { width: min(100% - 28px, 560px); padding: 14px 0 56px; }
+      header { min-height: 340px; padding: 56px 22px; border-radius: 27px; }
+      h1 { font-size: clamp(44px, 12vw, 64px); }
+      .intro { max-width: 27ch; font-size: 17px; }
+      .day { margin-top: 16px; padding: 22px 18px; border-radius: 24px; }
+      .day-heading { align-items: flex-start; flex-direction: column; gap: 5px; margin-bottom: 17px; padding-bottom: 16px; }
+      .day-heading span { white-space: normal; }
+      .stops { grid-template-columns: 1fr; gap: 10px; }
+      .stop { grid-template-columns: 70px minmax(0, 1fr); gap: 13px; padding: 17px 15px; border-radius: 18px; }
+      .place { font-size: 18px; }
+      .desc { font-size: 15px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+    /* Dinner poll additions; kept separate from the trip layout above. */
+    .poll-card { margin-top: 24px; padding: 28px 32px; border: 1px solid var(--line); border-radius: 28px; background: var(--surface); box-shadow: 0 12px 36px rgba(29, 29, 31, .045); }
+    .poll-card h2 { margin: 0 0 8px; font-size: clamp(25px, 4vw, 34px); line-height: 1.2; letter-spacing: -.035em; }
+    .poll-help, .poll-status { color: var(--muted); }
+    .poll-form { display: grid; grid-template-columns: 1fr 1fr auto; align-items: end; gap: 12px; margin: 20px 0 24px; }
+    .poll-field { display: grid; gap: 7px; font-weight: 600; }
+    .poll-field input, .poll-field select, .poll-submit { min-height: 48px; padding: 10px 13px; border: 1px solid rgba(29, 29, 31, .15); border-radius: 12px; background: #fff; color: var(--ink); font: inherit; }
+    .poll-submit { border-color: var(--accent); background: var(--accent); color: white; font-weight: 650; cursor: pointer; }
+    .poll-submit:disabled { opacity: .6; cursor: wait; }
+    .poll-results { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+    .poll-results li { display: flex; justify-content: space-between; gap: 12px; padding: 12px 14px; border-radius: 12px; background: var(--canvas); }
+    .poll-count { color: var(--accent); font-weight: 700; font-variant-numeric: tabular-nums; }
+    @media (max-width: 700px) {
+      .poll-card { margin-top: 16px; padding: 22px 18px; border-radius: 24px; }
+      .poll-form { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -179,7 +273,86 @@
     <footer>SHANGHAI · HANGZHOU · SUZHOU</footer>
     <p class="note">集合地點：chaiyi</p>
     <img src="tainan-trip-qr.png" alt="台南旅程網站 QR 碼" width="220" height="220" style="display: block; max-width: 100%; height: auto; margin: 20px auto 0;">
+    <section class="poll-card" aria-labelledby="poll-title">
+      <h2 id="poll-title">晚餐投票</h2>
+      <p class="poll-help">選一道晚餐，填上暱稱投一票；下方會顯示目前票數。</p>
+      <form class="poll-form" id="dinner-poll-form">
+        <label class="poll-field">暱稱<input name="nickname" type="text" maxlength="40" autocomplete="nickname" required></label>
+        <label class="poll-field">晚餐選項<select name="option" required><option value="" selected disabled>請選擇</option><option>上海菜</option><option>杭州菜</option><option>蘇州菜</option><option>火鍋</option></select></label>
+        <button class="poll-submit" type="submit">送出一票</button>
+      </form>
+      <h3 class="place">目前票數</h3>
+      <ul class="poll-results" id="dinner-poll-results" aria-live="polite"></ul>
+      <p class="poll-status" id="dinner-poll-status" role="status">正在載入票數…</p>
+    </section>
   </main>
+  <script>
+    (() => {
+      const projectUrl = 'https://lvhqowelwjizxpkpxhih.supabase.co';
+      const publishableKey = 'sb_publishable_79FWkXhbNLu9GjASnqLl9A_n2SmNF28';
+      const choices = ['上海菜', '杭州菜', '蘇州菜', '火鍋'];
+      const form = document.getElementById('dinner-poll-form');
+      const resultList = document.getElementById('dinner-poll-results');
+      const status = document.getElementById('dinner-poll-status');
+      const endpoint = `${projectUrl}/rest/v1/dinner_votes`;
+      const headers = { apikey: publishableKey };
+
+      async function refreshVotes() {
+        status.textContent = '正在更新票數…';
+        try {
+          const response = await fetch(`${endpoint}?select=option`, { headers, cache: 'no-store' });
+          if (!response.ok) throw new Error('票數讀取失敗');
+          const rows = await response.json();
+          const counts = Object.fromEntries(choices.map(choice => [choice, 0]));
+          rows.forEach(row => { if (Object.hasOwn(counts, row.option)) counts[row.option] += 1; });
+          resultList.replaceChildren(...choices.map(choice => {
+            const item = document.createElement('li');
+            const label = document.createElement('span');
+            const count = document.createElement('span');
+            label.textContent = choice;
+            count.className = 'poll-count';
+            count.textContent = `${counts[choice]} 票`;
+            item.append(label, count);
+            return item;
+          }));
+          status.textContent = '票數已更新。';
+        } catch {
+          status.textContent = '暫時無法載入票數，請稍後重試。';
+        }
+      }
+
+      form.addEventListener('submit', async event => {
+        event.preventDefault();
+        const data = new FormData(form);
+        const nickname = String(data.get('nickname') || '').trim();
+        const option = String(data.get('option') || '');
+        if (!nickname || !choices.includes(option)) {
+          status.textContent = '請填寫暱稱並選擇晚餐選項。';
+          return;
+        }
+        const button = form.querySelector('button');
+        button.disabled = true;
+        status.textContent = '正在送出投票…';
+        try {
+          const response = await fetch(endpoint, {
+            method: 'POST',
+            headers: { ...headers, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+            body: JSON.stringify({ nickname, option })
+          });
+          if (!response.ok) throw new Error('投票送出失敗');
+          form.reset();
+          await refreshVotes();
+          status.textContent = '投票成功，票數已更新。';
+        } catch {
+          status.textContent = '投票未能送出，請稍後再試。';
+        } finally {
+          button.disabled = false;
+        }
+      });
+
+      refreshVotes();
+    })();
+  </script>
 </body>
 </html>
 
