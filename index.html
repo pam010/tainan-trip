@@ -175,6 +175,8 @@
     .poll-submit:disabled { opacity: .6; cursor: wait; }
     .poll-form.is-locked input, .poll-form.is-locked select { background: var(--canvas); color: var(--muted); }
     .poll-form.is-locked .poll-submit { cursor: not-allowed; }
+    .poll-close-form { grid-template-columns: 1fr auto; margin-top: 16px; margin-bottom: 0; padding-top: 18px; border-top: 1px solid var(--line); }
+    .poll-close-form .poll-submit { background: transparent; color: var(--accent); }
     .poll-results { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
     .poll-results li { display: flex; justify-content: space-between; gap: 12px; padding: 12px 14px; border-radius: 12px; background: var(--canvas); }
     .poll-count { color: var(--accent); font-weight: 700; font-variant-numeric: tabular-nums; }
@@ -277,12 +279,18 @@
     <img src="tainan-trip-qr.png" alt="台南旅程網站 QR 碼" width="220" height="220" style="display: block; max-width: 100%; height: auto; margin: 20px auto 0;">
     <section class="poll-card" aria-labelledby="poll-title">
       <h2 id="poll-title">晚餐投票</h2>
-      <p class="poll-help">選一道晚餐，填上暱稱投一票；下方會顯示目前票數。</p>
-      <form class="poll-form" id="dinner-poll-form">
+      <div id="poll-open-content">
+        <p class="poll-help">選一道晚餐，填上暱稱投一票；下方會顯示目前票數。</p>
+        <form class="poll-form" id="dinner-poll-form">
         <label class="poll-field">暱稱<input name="nickname" type="text" maxlength="40" autocomplete="nickname" required></label>
         <label class="poll-field">晚餐選項<select name="option" required><option value="" selected disabled>請選擇</option><option>上海菜</option><option>杭州菜</option><option>蘇州菜</option><option>火鍋</option></select></label>
         <button class="poll-submit" type="submit">送出一票</button>
-      </form>
+        </form>
+        <form class="poll-form poll-close-form" id="close-poll-form">
+          <label class="poll-field">主揪密語<input name="passphrase" type="password" autocomplete="off" required></label>
+          <button class="poll-submit" type="submit">結束投票（主揪用）</button>
+        </form>
+      </div>
       <h3 class="place">目前票數</h3>
       <ul class="poll-results" id="dinner-poll-results" aria-live="polite"></ul>
       <p class="poll-status" id="dinner-poll-status" role="status">正在載入票數…</p>
@@ -294,11 +302,17 @@
       const publishableKey = 'sb_publishable_79FWkXhbNLu9GjASnqLl9A_n2SmNF28';
       const choices = ['上海菜', '杭州菜', '蘇州菜', '火鍋'];
       const form = document.getElementById('dinner-poll-form');
+      const closeForm = document.getElementById('close-poll-form');
+      const openContent = document.getElementById('poll-open-content');
+      const title = document.getElementById('poll-title');
       const resultList = document.getElementById('dinner-poll-results');
       const status = document.getElementById('dinner-poll-status');
       const endpoint = `${projectUrl}/rest/v1/dinner_votes`;
+      const statusEndpoint = `${projectUrl}/rest/v1/poll_status`;
+      const closeEndpoint = `${projectUrl}/functions/v1/close-poll`;
       const headers = { apikey: publishableKey };
       const localVoteKey = 'tainan-trip-dinner-vote';
+      let pollClosed = false;
 
       function getSavedVote() {
         try {
@@ -315,6 +329,22 @@
         form.querySelector('select[name="option"]').disabled = true;
         form.querySelector('button').disabled = true;
         status.textContent = `你已經投過了：${savedVote.option}`;
+      }
+
+      function showOpenPoll() {
+        pollClosed = false;
+        title.textContent = '晚餐投票';
+        openContent.hidden = false;
+        closeForm.hidden = false;
+      }
+
+      function showClosedPoll() {
+        pollClosed = true;
+        title.textContent = '投票已結束';
+        openContent.hidden = true;
+        closeForm.hidden = true;
+        form.querySelector('button').disabled = true;
+        status.textContent = '投票已結束，以下是最後票數。';
       }
 
       async function refreshVotes() {
@@ -344,6 +374,7 @@
 
       form.addEventListener('submit', async event => {
         event.preventDefault();
+        if (pollClosed) return;
         const data = new FormData(form);
         const nickname = String(data.get('nickname') || '').trim();
         const option = String(data.get('option') || '');
@@ -368,13 +399,51 @@
         } catch {
           status.textContent = '投票未能送出，請稍後再試。';
         } finally {
-          button.disabled = false;
+          if (!pollClosed && !getSavedVote()) button.disabled = false;
         }
       });
 
+      closeForm.addEventListener('submit', async event => {
+        event.preventDefault();
+        const button = closeForm.querySelector('button');
+        const passphrase = String(new FormData(closeForm).get('passphrase') || '');
+        button.disabled = true;
+        status.textContent = '正在確認主揪密語…';
+        try {
+          const response = await fetch(closeEndpoint, {
+            method: 'POST',
+            headers: { ...headers, Authorization: `Bearer ${publishableKey}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ passphrase })
+          });
+          if (!response.ok) {
+            if (response.status === 401) throw new Error('密語不正確');
+            throw new Error('結束投票失敗');
+          }
+          closeForm.reset();
+          await loadPollStatus();
+        } catch (error) {
+          status.textContent = error.message === '密語不正確' ? '密語不正確，投票尚未結束。' : '暫時無法結束投票，請稍後再試。';
+        } finally {
+          if (!pollClosed) button.disabled = false;
+        }
+      });
+
+      async function loadPollStatus() {
+        try {
+          const response = await fetch(`${statusEndpoint}?select=is_closed`, { headers, cache: 'no-store' });
+          if (!response.ok) throw new Error('投票狀態讀取失敗');
+          const rows = await response.json();
+          if (rows[0]?.is_closed) showClosedPoll(); else showOpenPoll();
+          await refreshVotes();
+          if (pollClosed) status.textContent = '投票已結束，以下是最後票數。';
+        } catch {
+          status.textContent = '暫時無法載入投票狀態，請稍後重試。';
+        }
+      }
+
       const savedVote = getSavedVote();
       if (savedVote) lockForm(savedVote);
-      refreshVotes();
+      loadPollStatus();
     })();
   </script>
 </body>
